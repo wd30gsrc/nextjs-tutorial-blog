@@ -1,4 +1,6 @@
 import Head from 'next/head'
+import Link from 'next/link'
+import Date from '../components/date'
 import Layout, { siteTitle } from '../components/Layout'
 import utilStyles from '../styles/utils.module.css'
 import { getSortedPostsData } from '../lib/posts'
@@ -30,12 +32,14 @@ export default function Home({ allPostsData }) {
         <ul className={utilStyles.list}>
           {allPostsData.map(({ id, date, title }) => (
             <li className={utilStyles.listItem} key={id}>
-              {title}
-              <br />
-              {id}
-              <br />
-              {date}
-            </li>
+            <Link href={`/posts/${id}`}>
+              <a>{title}</a>
+            </Link>
+            <br />
+            <small className={utilStyles.lightText}>
+              <Date dateString={date} />
+            </small>
+          </li>
           ))}
         </ul>
       </section>
@@ -83,4 +87,12 @@ getServerSidePropsでデータを取得
 - 外部データを取得するために使う
 - async/awaitを使って非同期処理を制御できる
 - pageコンポーネントのみで使用可能
+*/
+
+/*
+Dynamic Routes用ファイル
+ファイル名に[]を使うとDynamic Routesになる
+pages/posts/[id].js
+  https://example.com/posts/pre-rendering
+  https://example.com/posts/ssg-ssr
 */
